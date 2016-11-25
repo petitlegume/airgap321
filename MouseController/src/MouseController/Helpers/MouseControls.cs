@@ -19,5 +19,15 @@ namespace MouseController.Helpers
             POINT p = Win32.GetCursorPosition();
             Win32.SetCursorPos(p.X + deltaX, p.Y + deltaY);
         }
+
+        public void LeftClick()
+        {
+            Win32.LeftClick();
+        }
+
+        public void RightClick()
+        {
+            Win32.RightClick();
+        }
     }
 }

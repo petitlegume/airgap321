@@ -8,14 +8,59 @@ var EMOTICONS = ['left', 'up', 'right', 'down', 'leftClick', 'rightClick'];
 // Calculate the alphabet based on the emoticons.
 var ALPHABET = generateAlphabet(EMOTICONS);
 var PLACEHOLDER = 'img/placeholder.gif';
-var mouseCtrlURL = "http://localhost:60200/api/values/move?"
-var deltaX = 10;
-var deltaY = 10;
+var mouseCtrlBaseURL = "http://localhost:60200/api/values/";
+var mouseMoveURL = "move?";
+var mouseLeftClickURL = "leftclick?";
+var mouseRightClickURL = "rightclick?";
+var lastIndexUsed = 0;
+var deltaX = 30;
+var deltaY = 30;
 
 var sonicSocket;
 var sonicServer;
 
 createSonicNetwork();
+
+
+function moveCursor(x, y){
+	$.ajax({
+    'url' : mouseCtrlBaseURL + mouseMoveURL,
+    'type' : 'GET',
+    'data' : {
+      'x' : x,
+      'y' : y
+    },
+    'success' : function(data) {
+      if (data == "success") {
+        alert('request sent!');
+      }
+    }
+  });
+}
+
+function leftClick(){
+	$.ajax({
+    'url' : mouseCtrlBaseURL + mouseLeftClickURL,
+    'type' : 'GET',
+    'success' : function(data) {
+      if (data == "success") {
+        alert('request sent!');
+      }
+    }
+  });
+}
+
+function rightClick(){
+	$.ajax({
+    'url' : mouseCtrlBaseURL + mouseRightClickURL,
+    'type' : 'GET',
+    'success' : function(data) {
+      if (data == "success") {
+        alert('request sent!');
+      }
+    }
+  });
+}
 
 function createSonicNetwork(opt_coder) {
   // Stop the sonic server if it is listening.
@@ -77,21 +122,6 @@ function generateAlphabet(list) {
   return alphabet;
 }
 
-function moveCursor(x, y){
-	$.ajax({
-    'url' : mouseCtrlURL,
-    'type' : 'GET',
-    'data' : {
-      'x' : x,
-      'y' : y
-    },
-    'success' : function(data) {
-      if (data == "success") {
-        alert('request sent!');
-      }
-    }
-  });
-}
 
 function onPickEmoticon(e) {
   var emoticonEl = e.target;
@@ -120,21 +150,20 @@ function createEmoticonList(list) {
     emoticonEl.innerHTML = list[i];
     emoticonEl.dataset.name = name;
     emoticonEl.addEventListener('click', onPickEmoticon);
-
     emoticonListEl.appendChild(emoticonEl);
   }
 }
 
 function onIncomingEmoticon(message) {
-	moveCursor();
   console.log('message: ' + message);
   var index = parseInt(message);
+  if (message == "") index = lastIndexUsed;
   // Make the emoticon pop into view.
   var emoticonEl = document.querySelector('#received-emoticon');
   // Validate the message -- it has to be a single valid index.
   var isValid = (!isNaN(index) && 0 <= index && index < EMOTICONS.length);
   if (isValid) {
-	if (index)
+	lastIndexUsed = index;
     switch(index) {
     case 0:
         moveCursor(-deltaX, 0);

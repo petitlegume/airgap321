@@ -28,10 +28,25 @@ namespace MouseController.Controllers
         [Route("move")]
         public string Get([FromQuery]int x, [FromQuery]int y)
         {
-            //example query: http://localhost:60200/api/values/move?x=200&y=100
             mouse.MoveCursorFrom(x, y);
             return "done";
         }
-        
+
+        [HttpGet]
+        [Route("leftclick")]
+        public string GetLeftClick()
+        {
+            mouse.LeftClick();
+            return "done";
+        }
+
+        [HttpGet]
+        [Route("rightclick")]
+        public string GetRightClick()
+        {
+            mouse.RightClick();
+            return "done";
+        }
+
     }
 }
