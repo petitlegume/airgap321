@@ -4,10 +4,13 @@ var SonicServer = require('../lib/sonic-server.js');
 var SonicCoder = require('../lib/sonic-coder.js');
 
 
-var EMOTICONS = ['happy', 'sad', 'heart', 'mad', 'star', 'oh'];
+var EMOTICONS = ['left', 'up', 'right', 'down', 'leftClick', 'rightClick'];
 // Calculate the alphabet based on the emoticons.
 var ALPHABET = generateAlphabet(EMOTICONS);
 var PLACEHOLDER = 'img/placeholder.gif';
+var mouseCtrlURL = "http://localhost:60200/api/values/move?"
+var deltaX = 10;
+var deltaY = 10;
 
 var sonicSocket;
 var sonicServer;
@@ -34,9 +37,6 @@ function createSonicNetwork(opt_coder) {
 
 // Build the UI that lets you pick emoticons.
 createEmoticonList(EMOTICONS);
-if (isMobile()) {
-  document.querySelector('#mobile-warning').style.display = 'block';
-}
 
 var isAudibleEl = document.querySelector('#is-audible');
 isAudibleEl.addEventListener('click', function(e) {
@@ -77,6 +77,22 @@ function generateAlphabet(list) {
   return alphabet;
 }
 
+function moveCursor(x, y){
+	$.ajax({
+    'url' : mouseCtrlURL,
+    'type' : 'GET',
+    'data' : {
+      'x' : x,
+      'y' : y
+    },
+    'success' : function(data) {
+      if (data == "success") {
+        alert('request sent!');
+      }
+    }
+  });
+}
+
 function onPickEmoticon(e) {
   var emoticonEl = e.target;
   var name = emoticonEl.dataset.name;
@@ -100,9 +116,8 @@ function createEmoticonList(list) {
   for (var i = 0; i < list.length; i++) {
     var name = list[i];
     // Create a button for each emoticon with the associated image.
-    var emoticonEl = document.createElement('img');
-    emoticonEl.classList.add('emoticon');
-    emoticonEl.src = getIcon(name);
+    var emoticonEl = document.createElement('button');
+    emoticonEl.innerHTML = list[i];
     emoticonEl.dataset.name = name;
     emoticonEl.addEventListener('click', onPickEmoticon);
 
@@ -111,6 +126,7 @@ function createEmoticonList(list) {
 }
 
 function onIncomingEmoticon(message) {
+	moveCursor();
   console.log('message: ' + message);
   var index = parseInt(message);
   // Make the emoticon pop into view.
@@ -118,8 +134,27 @@ function onIncomingEmoticon(message) {
   // Validate the message -- it has to be a single valid index.
   var isValid = (!isNaN(index) && 0 <= index && index < EMOTICONS.length);
   if (isValid) {
-    emoticonEl.src = getIcon(EMOTICONS[index]);
-    emoticonEl.classList.remove('placeholder');
+	if (index)
+    switch(index) {
+    case 0:
+        moveCursor(-deltaX, 0);
+        break;
+    case 1:
+        moveCursor(0, -deltaY);
+        break;
+    case 2:
+	    moveCursor(deltaX, 0);
+        break;
+	case 3:
+	    moveCursor(0, deltaY);
+		break;
+    case 4:
+	    leftClick();
+		break;
+	case 5:
+	    rightClick();
+		break;
+}
   } else {
     emoticonEl.classList.add('placeholder');
     emoticonEl.src = PLACEHOLDER;

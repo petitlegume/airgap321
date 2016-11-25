@@ -29,7 +29,7 @@ namespace MouseController.Controllers
         public string Get([FromQuery]int x, [FromQuery]int y)
         {
             //example query: http://localhost:60200/api/values/move?x=200&y=100
-            mouse.MoveCursor(x, y);
+            mouse.MoveCursorFrom(x, y);
             return "done";
         }
         
