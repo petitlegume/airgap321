@@ -153,6 +153,29 @@
             emoticonEl.style.width = '60px';
             emoticonEl.style.marginRight = '4px';
             emoticonListEl.appendChild(emoticonEl);
+
+            switch(list[i]) {
+                case "left" :
+                    Mousetrap.bind("left", function() {
+                        moveCursor(-deltaX, 0);
+                    });
+                    break;
+                case "right" :
+                    Mousetrap.bind("right", function() {
+                        moveCursor(deltaX, 0);
+                    });
+                    break;
+                case "up" :
+                    Mousetrap.bind("up", function() {
+                        moveCursor(0, deltaY);
+                    });
+                    break;
+                case "down" :
+                    Mousetrap.bind("down", function() {
+                        moveCursor(0, -deltaY);
+                    });
+                    break;
+            }
         }
     }
 
