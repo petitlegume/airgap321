@@ -82,6 +82,7 @@ function createSonicNetwork(opt_coder) {
 
 // Build the UI that lets you pick emoticons.
 createEmoticonList(EMOTICONS);
+createEmoticonText();
 
 var isAudibleEl = document.querySelector('#is-audible');
 isAudibleEl.addEventListener('click', function(e) {
@@ -153,6 +154,20 @@ function createEmoticonList(list) {
     emoticonListEl.appendChild(emoticonEl);
   }
 }
+
+function sendKey(){
+  alert("hello");
+}
+
+function createEmoticonText() {
+    var emoticonTextEl = document.querySelector('#text-emoticon');
+    var emoticonText = document.createElement('textarea');
+
+    emoticonTextEl.style.marginTop="10px";
+    emoticonText.onkeyup = sendKey;
+    emoticonTextEl.appendChild(emoticonText);
+}
+
 
 function onIncomingEmoticon(message) {
   console.log('message: ' + message);
