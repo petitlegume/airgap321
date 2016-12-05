@@ -12,6 +12,7 @@
     var mouseMoveURL = "move?";
     var mouseLeftClickURL = "leftclick?";
     var mouseRightClickURL = "rightclick?";
+    var keyPushedURL = "keypress?";
     var lastIndexUsed = 0;
     var deltaX = 30;
     var deltaY = 30;
@@ -60,6 +61,22 @@
                 }
             }
         });
+    }
+
+    function keyPressed(value){
+        $.ajax({
+            'url' : mouseCtrlBaseURL + keyPushedURL,
+            'type' : 'GET',
+            'data' : {
+                'value' : value
+            },
+            'success' : function(data) {
+                if (data == "success") {
+                    alert('request sent!');
+                }
+            }
+        });
+
     }
 
     function createSonicNetwork(opt_coder) {
@@ -233,10 +250,8 @@
                     rightClick();
                     break;
                 case index >= 6:
-                    var emoticonTextEl = document.querySelector('#text-emoticon');
-                    var textArea = emoticonTextEl.firstChild;
-                    var valueReturned;
-                    textArea.value = valueReturned;
+                    keyPressed(EMOTICONS[index]);
+                    break;
             }
         } else {
             emoticonEl.classList.add('placeholder');

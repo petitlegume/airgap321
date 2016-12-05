@@ -11,10 +11,12 @@ namespace MouseController.Controllers
     public class ValuesController : Controller
     {
         private MouseControls mouse;
+        private KeyboardControls keyboard;
 
         public ValuesController()
         {
             mouse = new MouseControls();
+            keyboard = new KeyboardControls();
         }
         // GET api/values
         [HttpGet]
@@ -45,6 +47,14 @@ namespace MouseController.Controllers
         public string GetRightClick()
         {
             mouse.RightClick();
+            return "done";
+        }
+
+        [HttpGet]
+        [Route("keypress")]
+        public string Get([FromQuery]char value)
+        {
+            keyboard.press();
             return "done";
         }
 
