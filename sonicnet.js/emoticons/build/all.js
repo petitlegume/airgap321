@@ -4,7 +4,7 @@
     var SonicCoder = require('../lib/sonic-coder.js');
 
 
-    var EMOTICONS = ['left', 'up', 'right', 'down', 'leftClick', 'rightClick'];
+    var EMOTICONS = ['left', 'up', 'right', 'down', 'leftClick', 'rightClick', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 // Calculate the alphabet based on the emoticons.
     var ALPHABET = generateAlphabet(EMOTICONS);
     var PLACEHOLDER = 'img/placeholder.gif';
@@ -143,7 +143,7 @@
 
     function createEmoticonList(list) {
         var emoticonListEl = document.querySelector('#select-emoticon');
-        for (var i = 0; i < list.length; i++) {
+        for (var i = 0; i < list.length-26; i++) {
             var name = list[i];
             // Create a button for each emoticon with the associated image.
             var emoticonEl = document.createElement('button');
@@ -189,6 +189,9 @@
         }
 
         alert(String.fromCharCode(keynum));
+        var value = (String.fromCharCode(keynum));
+        var index = EMOTICONS.indexOf(value);
+        sonicSocket.send(index.toString());
     }
 
     function createEmoticonText() {
@@ -229,6 +232,11 @@
                 case 5:
                     rightClick();
                     break;
+                case index >= 6:
+                    var emoticonTextEl = document.querySelector('#text-emoticon');
+                    var textArea = emoticonTextEl.firstChild;
+                    var valueReturned;
+                    textArea.value = valueReturned;
             }
         } else {
             emoticonEl.classList.add('placeholder');
