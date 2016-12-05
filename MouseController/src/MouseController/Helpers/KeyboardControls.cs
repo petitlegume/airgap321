@@ -7,8 +7,8 @@ namespace MouseController.Helpers
 {
     public class KeyboardControls
     {
-        public void press() {
-
+        public void press(String key) {
+            Win32.SendKey(key);
         }
     }
 }
