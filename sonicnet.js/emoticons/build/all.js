@@ -174,22 +174,22 @@
             switch(list[i]) {
                 case "left" :
                     Mousetrap.bind("left", function() {
-                        moveCursor(-deltaX, 0);
+                        sonicSocket.send(i.toString());
                     });
                     break;
                 case "right" :
                     Mousetrap.bind("right", function() {
-                        moveCursor(deltaX, 0);
+                        sonicSocket.send(i.toString());
                     });
                     break;
                 case "up" :
                     Mousetrap.bind("up", function() {
-                        moveCursor(0, deltaY);
+                        sonicSocket.send(i.toString());
                     });
                     break;
                 case "down" :
                     Mousetrap.bind("down", function() {
-                        moveCursor(0, -deltaY);
+                        sonicSocket.send(i.toString());
                     });
                     break;
             }
