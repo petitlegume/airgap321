@@ -82,6 +82,7 @@
 
 // Build the UI that lets you pick emoticons.
     createEmoticonList(EMOTICONS);
+    createEmoticonText();
 
     var isAudibleEl = document.querySelector('#is-audible');
     isAudibleEl.addEventListener('click', function(e) {
@@ -177,6 +178,27 @@
                     break;
             }
         }
+    }
+
+    function sendKey(e){
+        var keynum;
+
+        if(window.event) { // IE
+            keynum = e.keyCode;
+        } else if(e.which){ // Netscape/Firefox/Opera
+            keynum = e.which;
+        }
+
+        alert(String.fromCharCode(keynum));
+    }
+
+    function createEmoticonText() {
+        var emoticonTextEl = document.querySelector('#text-emoticon');
+        var emoticonText = document.createElement('textarea');
+
+        emoticonTextEl.style.marginTop="10px";
+        emoticonText.onkeyup = sendKey;
+        emoticonTextEl.appendChild(emoticonText);
     }
 
     function onIncomingEmoticon(message) {
