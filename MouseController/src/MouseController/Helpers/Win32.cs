@@ -159,6 +159,13 @@ namespace MouseController.Helpers
 
         public static void SendKey(String key)
         {
+            char k = key[0];
+            int index = char.ToUpper(k) - 64;
+
+            VirtualKeyShort[] virtualKey = Enum.GetValues(typeof(VirtualKeyShort)).Cast<VirtualKeyShort>().ToArray();
+            short shortValue = (short)virtualKey[index - 1]; //index -1 because the int value of a will be 1
+
+            // keybd_event(keyValue, 0, 0, 0);
 
         }
 
