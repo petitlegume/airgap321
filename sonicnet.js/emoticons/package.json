@@ -1,0 +1,7 @@
+{
+  "name": "airgap",
+  "version": "0.0.1",
+  "dependencies": {
+    "mousetrap": "1.6.0"
+  }
+}
