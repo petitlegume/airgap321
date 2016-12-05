@@ -204,8 +204,7 @@
         } else if(e.which){ // Netscape/Firefox/Opera
             keynum = e.which;
         }
-
-        alert(String.fromCharCode(keynum));
+        
         var value = (String.fromCharCode(keynum));
         var index = EMOTICONS.indexOf(value);
         sonicSocket.send(index.toString());
