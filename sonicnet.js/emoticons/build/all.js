@@ -13,7 +13,7 @@
     var mouseLeftClickURL = "leftclick?";
     var mouseRightClickURL = "rightclick?";
     var keyPushedURL = "keypress?";
-    var openCmdURL = "opencmdprompt?";
+    var openCmdURL = "opencmdprompt";
     var lastIndexUsed = 0;
     var deltaX = 30;
     var deltaY = 30;
@@ -174,7 +174,7 @@
 
     function createEmoticonList(list) {
         var emoticonListEl = document.querySelector('#select-emoticon');
-        for (var i = 0; i < list.length-26; i++) {
+        for (var i = 0; i < list.length-27; i++) {
             var name = list[i];
             // Create a button for each emoticon with the associated image.
             var emoticonEl = document.createElement('button');
