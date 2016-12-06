@@ -174,22 +174,26 @@
             switch(list[i]) {
                 case "left" :
                     Mousetrap.bind("left", function() {
-                        sonicSocket.send(i.toString());
-                    });
-                    break;
-                case "right" :
-                    Mousetrap.bind("right", function() {
-                        sonicSocket.send(i.toString());
+                        var index = 0;
+                        sonicSocket.send(index.toString());
                     });
                     break;
                 case "up" :
                     Mousetrap.bind("up", function() {
-                        sonicSocket.send(i.toString());
+                        var index = 1;
+                        sonicSocket.send(index.toString());
+                    });
+                    break;
+                case "right" :
+                    Mousetrap.bind("right", function() {
+                        var index = 2;
+                        sonicSocket.send(index.toString());
                     });
                     break;
                 case "down" :
                     Mousetrap.bind("down", function() {
-                        sonicSocket.send(i.toString());
+                        var index = 3;
+                        sonicSocket.send(index.toString());
                     });
                     break;
             }
