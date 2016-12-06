@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MouseController.Helpers;
+using System.Diagnostics;
 
 namespace MouseController.Controllers
 {
@@ -58,5 +59,18 @@ namespace MouseController.Controllers
             return "done";
         }
 
+        [HttpGet]
+        [Route("opencmdprompt")]
+        public string OpenCmdPrompt()
+        {
+            Process cmdprompt = new Process();
+            ProcessStartInfo cmdpromptinfo = new ProcessStartInfo();
+
+            cmdpromptinfo.FileName = "cmd.exe";
+
+            cmdprompt.StartInfo = cmdpromptinfo;
+            cmdprompt.Start();
+            return "done";
+        }
     }
 }

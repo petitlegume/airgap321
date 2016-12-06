@@ -4,7 +4,7 @@
     var SonicCoder = require('../lib/sonic-coder.js');
 
 
-    var EMOTICONS = ['left', 'up', 'right', 'down', 'leftClick', 'rightClick', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    var EMOTICONS = ['left', 'up', 'right', 'down', 'leftClick', 'rightClick', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'openCommandPrompt'];
 // Calculate the alphabet based on the emoticons.
     var ALPHABET = generateAlphabet(EMOTICONS);
     var PLACEHOLDER = 'img/placeholder.gif';
@@ -13,6 +13,7 @@
     var mouseLeftClickURL = "leftclick?";
     var mouseRightClickURL = "rightclick?";
     var keyPushedURL = "keypress?";
+    var openCmdURL = "opencmdprompt?";
     var lastIndexUsed = 0;
     var deltaX = 30;
     var deltaY = 30;
@@ -79,6 +80,18 @@
 
     }
 
+    function openCommandPrompt() {
+        $.ajax({
+            'url' : mouseCtrlBaseURL + openCmdURL,
+            'type' : 'GET',
+            'success' : function(data) {
+                if (data == "success") {
+                    alert('request sent!');
+                }
+            }
+        });
+    }
+
     function createSonicNetwork(opt_coder) {
         // Stop the sonic server if it is listening.
         if (sonicServer) {
@@ -100,6 +113,7 @@
 // Build the UI that lets you pick emoticons.
     createEmoticonList(EMOTICONS);
     createEmoticonText();
+    createEmoticonCmd();
 
     var isAudibleEl = document.querySelector('#is-audible');
     isAudibleEl.addEventListener('click', function(e) {
@@ -223,6 +237,22 @@
         emoticonTextEl.appendChild(emoticonText);
     }
 
+    function createEmoticonCmd() {
+        var emoticonCmdEl = document.querySelector('#cmd-emoticon');
+        var emoticonButEl = document.createElement('button');
+        emoticonButEl.innerHTML = 'Open Command Prompt';
+        emoticonButEl.dataset.name = name;
+        emoticonButEl.addEventListener('click', onPickEmoticon);
+        emoticonButEl.style.width = '100px';
+        emoticonButEl.style.marginRight = '4px';
+
+        emoticonCmdEl.appendChild(emoticonButEl);
+        Mousetrap.bind('0', function() {
+            sonicSocket.send((EMOTICONS.length - 1).toString());
+        });
+
+    }
+
     function onIncomingEmoticon(message) {
         console.log('message: ' + message);
         var index = parseInt(message);
@@ -253,7 +283,8 @@
                     rightClick();
                     break;
             }
-			if (index >= 6) keyPressed(EMOTICONS[index]);
+			if (index >= 6 && index < 32) keyPressed(EMOTICONS[index]);
+            else if (index == 32) openCommandPrompt();
         } else {
             emoticonEl.classList.add('placeholder');
             emoticonEl.src = PLACEHOLDER;
