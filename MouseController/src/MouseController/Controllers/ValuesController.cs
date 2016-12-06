@@ -63,7 +63,7 @@ namespace MouseController.Controllers
         [Route("opencmdprompt")]
         public string OpenCmdPrompt()
         {
-            Process.Start("C:\\Users\\BaDaS\\Documents\\Github\\airgap321\\MouseController\\src\\MouseController\\openCmdPrompt.bat");
+            Process.Start("openCmdPrompt.bat");
 
             return "done";
         }
