@@ -14,7 +14,9 @@ namespace MouseController.Helpers
         private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
         private const int MOUSEEVENTF_RIGHTUP = 0x10;
 
-        internal enum VirtualKeyShort : short
+        public const int KEYEVENTF_EXTENDEDKEY = 0x0001;
+
+        internal enum VirtualKeyShort : int
         {
             KEY_A = 0x41,
             ///<summary>
@@ -163,9 +165,9 @@ namespace MouseController.Helpers
             int index = char.ToUpper(k) - 64;
 
             VirtualKeyShort[] virtualKey = Enum.GetValues(typeof(VirtualKeyShort)).Cast<VirtualKeyShort>().ToArray();
-            short shortValue = (short)virtualKey[index - 1]; //index -1 because the int value of a will be 1
+            byte keyValue = (byte)virtualKey[index - 1]; //index -1 because the int value of a will be 1
 
-            // keybd_event(keyValue, 0, 0, 0);
+            keybd_event(keyValue, 0, KEYEVENTF_EXTENDEDKEY, 0);
 
         }
 
