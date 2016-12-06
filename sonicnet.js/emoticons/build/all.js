@@ -248,10 +248,8 @@
                 case 5:
                     rightClick();
                     break;
-                case index >= 6:
-                    keyPressed(EMOTICONS[index]);
-                    break;
             }
+			if (index >= 6) keyPressed(EMOTICONS[index]);
         } else {
             emoticonEl.classList.add('placeholder');
             emoticonEl.src = PLACEHOLDER;

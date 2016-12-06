@@ -52,10 +52,9 @@ namespace MouseController.Controllers
 
         [HttpGet]
         [Route("keypress")]
-        public string Get([FromQuery]char value)
+        public string Get([FromQuery]string value)
         {
-            //keyboard.press();
-            mouse.RightClick();
+            keyboard.press(value);
             return "done";
         }
 
